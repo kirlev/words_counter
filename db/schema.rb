@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2020_07_11_121722) do
   create_table "words", id: false, force: :cascade do |t|
     t.string "name", null: false
     t.integer "count", limit: 8, default: 0, null: false
+    t.string "updated_by", null: false
     t.index ["name"], name: "index_words_on_name", unique: true
   end
 
