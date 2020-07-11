@@ -53,7 +53,7 @@ A request coming in will create a job to be processed later and the client will 
 error message in case of an invalid input. 
 
 I created 2 job classes, one for string input and one for file or URL input, the string is simple cause it is relatively small, 
-just count the words and bulk insert the results, the file and URL input are more complicated because of their size.
+just count the words and bulk insert the results in batches, the file and URL input are more complicated because of their size.
 
 In order to count the words I created a class that uses a gem called 'Pragmatic tokenizer' in order to tokenize the text 
 and I used a Redis hash to store the transient job data, the reason I didn't use a Ruby hash is because for a large text 
@@ -64,7 +64,7 @@ to be gems.
 Using a Redis Hash created a challenge when it came to persisting the data once the processing was done, since Redis 
 hash iterator does not guarantee to return each field once I had to make sure I do not count duplicate, 
 on top of that I did want to create an INSERT query for each word but to INSERT in batches so I had to implement my own 
-batch upsert SQLilte query in the 'Word' model and not use ActiveRecord.
+batch upsert SQLilte query in the 'Word' model and not use ActiveRecord for the inserts/updates.
 
 To read the local files and external files I used the OpenURI class that supports both with the same syntax, 
 for local files it iterates on the lines one by one and for URLs it download the file to a temporary local file and 
