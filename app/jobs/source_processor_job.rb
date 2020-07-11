@@ -4,8 +4,8 @@ class SourceProcessorJob
   PERSISTED_BATCH_SIZE = 1000
 
   def initialize(*)
-    @words_frequency = {}
     @job_id = SecureRandom.uuid
+    @words_frequency = RedisFrequencyStore.new(@job_id)
   end
 
   def perform
@@ -23,7 +23,7 @@ class SourceProcessorJob
   def persist_words_frequency
     Word.transaction do
       words_frequency.each_slice(PERSISTED_BATCH_SIZE) do |words_frequency_slice|
-        Word.bulk_create_or_add(job_id, words_frequency_slice.to_h)
+        Word.bulk_create_or_add(job_id, words_frequency_slice)
       end
     end
   end

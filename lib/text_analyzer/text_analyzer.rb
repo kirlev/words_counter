@@ -1,7 +1,7 @@
 class TextAnalyzer
   attr_reader :words_frequency_storage
 
-  def initialize(data_storage = {})
+  def initialize(data_storage)
     @words_frequency_storage = data_storage
   end
 
@@ -9,18 +9,13 @@ class TextAnalyzer
     words_array = generate_words_array(text)
 
     words_array.each do |word|
-      words_frequency_storage[word.to_sym] ||= 0
-      words_frequency_storage[word.to_sym] += 1
+      words_frequency_storage.increment(word)
     end
 
     words_frequency_storage
   end
 
   private
-
-  def self.redis
-    @redis = Redis.new
-  end
 
   def generate_words_array(text)
     tokenizer_options = {
