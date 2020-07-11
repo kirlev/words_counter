@@ -12,6 +12,7 @@ class SourceProcessorJob
     Rails.logger.info("#{self.class.name} - processing...")
     process_source
     persist_words_frequency
+    words_frequency.clear
     Rails.logger.info("#{self.class.name} - persisted #{words_frequency.count} words")
   rescue => exc
     Rails.logger.error("#{self.class.name} - processing failed. error: #{exc.message}")

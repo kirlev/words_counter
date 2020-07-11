@@ -9,6 +9,10 @@ class RedisFrequencyStore
     redis.hlen(store_key)
   end
 
+  def clear
+    redis.del(store_key)
+  end
+
   def increment(word_name)
     redis.hincrby(store_key, word_name, 1)
   end
