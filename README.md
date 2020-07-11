@@ -3,7 +3,7 @@
 Words Counter API allow you to analyze source text and keep track of how many times a word appeared in all texts analyzed.
 
 The API has 2 endpoints:
-####* POST /analyze-text
+#### POST /analyze-text
 The endpoint expects a json with 2 fields: source and source_type.
 
 There are 3 acceptable source types values: string, file_path or url.
@@ -14,26 +14,26 @@ Depending on the value of the source_type the service will expect a different so
 - file_path - the source must be a valid path to a file existing in the host running the service, the path must be relative to the service's working directory
 - url - the source must be a valid URL to a text file.
 
-####* GET /words/:word
+#### GET /words/:word
 The endpoint accepts a word and returns the amount of times the word was present in texts analyzed so far.
 
 
 Ruby version - 2.7
 
-###System dependencies
+### System dependencies
 The service uses SQLite for storing word counts
 The SQLite DB is also used by the Delayed::Job gem
 
-####Database creation
+#### Database creation
 Run `rails db:migrate` to create the necessary tables.
 Make sure you have a Redis server running with the default host and port localhost:6379 
 
-###Deployment instructions
+### Deployment instructions
 To deploy the web server open the terminal and run: `rails s` 
 
 To start the jobs manager run: `QUEUES=string,file_path,url rake jobs:work`
 
-##Services (job queues, cache servers, search engines, etc.)
+## Services (job queues, cache servers, search engines, etc.)
 I used a rails controller for the /analyze-text endpoint, there were 2 main things I had to take into account:
 
 1. The endpoint must have a low response time, the actual analysis of the text must not happen as part of processing the request.
@@ -74,7 +74,7 @@ instead of one but I cared less about the processing time and more about memory 
 The validation of the input and the decision of which job to create is done in the TextProcessorService which is called
 from the controller, I try to keep the controller as lean as possible.
 
-##usage examples
+## usage examples
 
 ### /analyze-text
 String source type
