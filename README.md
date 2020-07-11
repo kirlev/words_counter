@@ -2,6 +2,9 @@
 
 Words Counter API allow you to analyze source text and keep track of how many times a word appeared in all texts analyzed.
 
+Ruby version - 2.7
+Rails version - 6.0
+
 The API has 2 endpoints:
 #### POST /analyze-text
 The endpoint expects a json with 2 fields: source and source_type.
@@ -16,9 +19,6 @@ Depending on the value of the source_type the service will expect a different so
 
 #### GET /words/:word
 The endpoint accepts a word and returns the amount of times the word was present in texts analyzed so far.
-
-
-Ruby version - 2.7
 
 ### System dependencies
 The service uses SQLite for storing word counts
